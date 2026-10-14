@@ -1,0 +1,9 @@
+{% extends "core/base.html" %}{% load static %}{% block heading %}Laundry{% endblock %}
+{% block content %}
+<div class="hero" style="background-image:url('{% static 'core/img/laundry.jpg' %}')"></div>
+<form method="post" class="card">{% csrf_token %}
+  {{ form.non_field_errors }}
+  {% for f in form %}{% include "core/_field.html" with field=f %}{% endfor %}
+  <p><button class="btn">Continue</button></p>
+</form>
+{% endblock %}

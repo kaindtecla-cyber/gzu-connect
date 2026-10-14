@@ -1,0 +1,10 @@
+{% extends "core/base.html" %}{% load static %}{% block heading %}Print &amp; copy{% endblock %}
+{% block content %}
+<div class="hero" style="background-image:url('{% static 'core/img/print.jpg' %}');background-color:#fff"></div>
+<form method="post" enctype="multipart/form-data" class="card">{% csrf_token %}
+  {{ form.non_field_errors }}
+  {% for f in form %}{% include "core/_field.html" with field=f %}{% endfor %}
+  <p class="help">Prices: set by each print point per page. You'll see the total before you pay.</p>
+  <p><button class="btn">Continue</button></p>
+</form>
+{% endblock %}

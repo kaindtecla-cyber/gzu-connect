@@ -1,0 +1,14 @@
+{% extends "core/base.html" %}{% block heading %}Wallet{% endblock %}
+{% block content %}
+<div class="wallet"><span class="muted" style="color:#cfe6d6">Balance</span><b>${{ wallet_balance }}</b></div>
+<form method="post" class="card">{% csrf_token %}<b>Top up with {% if paynow_mode %}EcoCash / OneMoney{% else %}simulated EcoCash{% endif %}</b>
+  {% include "core/_field.html" with field=form.amount %}
+  {% if paynow_mode %}{% include "core/_field.html" with field=form.phone %}{% endif %}
+  <p><button class="btn alt">Top up</button></p>
+  {% if paynow_mode %}<p class="help">You will get a prompt on your phone to enter your wallet PIN.</p>
+  {% else %}<p class="help">Demo mode: no real money moves.</p>{% endif %}</form>
+<h2>History</h2>
+<div class="card"><table>{% for t in transactions %}<tr><td>{{ t.get_kind_display }}<br><span class="muted">{{ t.created|date:"j M, H:i" }}{% if t.reference %} - {{ t.reference }}{% endif %}</span></td>
+  <td><span class="{% if t.amount > 0 %}pos{% else %}neg{% endif %}">{% if t.amount > 0 %}+{% endif %}${{ t.amount }}</span></td></tr>
+{% empty %}<tr><td>No transactions yet.</td><td></td></tr>{% endfor %}</table></div>
+{% endblock %}

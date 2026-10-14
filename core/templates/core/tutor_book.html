@@ -1,0 +1,9 @@
+{% extends "core/base.html" %}{% block heading %}Book {{ tutor.module_code }} tutor{% endblock %}
+{% block content %}
+<div class="card"><b>{{ tutor.user.first_name|default:tutor.user.username }}</b><div class="muted">{{ tutor.module_code }} {{ tutor.module_name }} - ${{ tutor.hourly_rate }}/hr</div></div>
+<form method="post" class="card">{% csrf_token %}
+  {{ form.non_field_errors }}
+  {% for f in form %}{% include "core/_field.html" with field=f %}{% endfor %}
+  <p><button class="btn">Continue</button></p>
+</form>
+{% endblock %}

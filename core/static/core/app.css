@@ -1,0 +1,55 @@
+:root{--bg:#EAF2EC;--card:#fff;--text:#1B1F1C;--muted:#5B7F6A;--pri:#14532D;--onpri:#fff;--acc:#F2B705;--bd:#d5e3da;--ok:#2E8B57;--bad:#C0392B;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px)}
+@media(prefers-color-scheme:dark){:root{--bg:#0f1a14;--card:#18261e;--text:#eef4f0;--muted:#8FBF9F;--pri:#2E8B57;--bd:#2a3f33}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Calibri,Arial,sans-serif;font-size:16px;line-height:1.4}
+a{color:inherit}
+#app{max-width:480px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column}
+header{background:var(--pri);color:var(--onpri);padding:12px 16px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:5}
+header h1{font-size:18px;margin:0;flex:1}
+header a{text-decoration:none}
+.logo{width:36px;height:36px;border-radius:50%;background:#fff;flex:none}
+main{flex:1;padding:16px;padding-bottom:90px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:14px;margin-bottom:12px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.muted{color:var(--muted);font-size:14px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tile{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:8px 8px 14px;text-align:center;font-weight:700;text-decoration:none;display:block}
+.tile .ph{height:120px;border-radius:10px;background:var(--bd) center/contain no-repeat;margin-bottom:8px}
+.tile .ph.cover{background-size:cover}
+.hero{height:140px;border-radius:14px;margin-bottom:12px;background:var(--bd) center/contain no-repeat}
+.hero.tutor,.tile .ph.tutor{background:linear-gradient(135deg,var(--pri),#2E8B57);display:flex;align-items:center;justify-content:center;font-size:44px}
+.wallet{background:var(--pri);color:var(--onpri);border-radius:14px;padding:16px;margin-bottom:16px}
+.wallet b{font-size:28px;display:block}
+.btn{display:block;width:100%;text-align:center;text-decoration:none;background:var(--pri);color:var(--onpri);border:0;border-radius:12px;padding:12px 16px;font-size:16px;font-weight:700;cursor:pointer}
+.btn.sm{display:inline-block;width:auto;padding:6px 12px;font-size:14px;border-radius:10px}
+.btn.alt{background:var(--acc);color:#1B1F1C}
+.btn.danger{background:var(--bad)}
+.btn.ghost{background:none;border:1px solid var(--bd);color:var(--text)}
+h2{font-size:16px;margin:16px 0 8px}
+label{display:block;font-size:14px;color:var(--muted);margin:10px 0 4px}
+input,select,textarea{width:100%;padding:11px;border-radius:10px;border:1px solid var(--bd);background:var(--card);color:var(--text);font-size:16px;font-family:inherit}
+input[type=checkbox],input[type=radio]{width:auto}
+input[type=number].qty{width:70px;text-align:center}
+.help{font-size:13px;color:var(--muted)}
+.errorlist{list-style:none;margin:4px 0;padding:0;color:var(--bad);font-size:14px}
+.msg{padding:10px 14px;border-radius:10px;margin-bottom:10px;font-size:15px}
+.msg.success{background:#d6efe0;color:#14532D}
+.msg.error{background:#f8d9d5;color:#7a1f14}
+.bar{position:fixed;left:0;right:0;bottom:56px;max-width:480px;margin:0 auto;padding:10px 16px;background:var(--bg);border-top:1px solid var(--bd)}
+nav{position:fixed;left:0;right:0;bottom:0;max-width:480px;margin:0 auto;display:flex;background:var(--card);border-top:1px solid var(--bd);padding-bottom:env(safe-area-inset-bottom,0px)}
+nav a{flex:1;text-align:center;color:var(--muted);padding:12px 2px;font-size:12px;text-decoration:none}
+nav a.on{color:var(--pri);font-weight:700}
+.tag{font-size:12px;padding:3px 8px;border-radius:8px;background:var(--bd);color:var(--text)}
+.tag.ok{background:var(--ok);color:#fff}
+.step{display:flex;gap:10px;align-items:center;margin:6px 0}
+.dot{width:14px;height:14px;border-radius:50%;background:var(--bd);flex:none}
+.dot.on{background:var(--ok)}
+.stars{display:flex;flex-direction:row-reverse;justify-content:flex-end;gap:4px}
+.stars input{display:none}
+.stars label{font-size:30px;color:var(--bd);cursor:pointer;margin:0}
+.stars input:checked~label,.stars label:hover,.stars label:hover~label{color:var(--acc)}
+table{width:100%;border-collapse:collapse;font-size:14px}
+td{padding:6px 0;border-top:1px solid var(--bd)}
+td:last-child{text-align:right}
+.pos{color:var(--ok);font-weight:700}.neg{color:var(--bad);font-weight:700}

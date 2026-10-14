@@ -1,0 +1,16 @@
+{% extends "core/base.html" %}{% block heading %}Order #{{ order.pk }}{% endblock %}
+{% block content %}
+<div class="card"><div class="row"><b>{{ order.title }}</b><span>${{ order.amount }}</span></div>
+  <div class="muted">{{ order.detail }}</div>
+  {% if order.document %}<p><a class="btn sm ghost" href="{% url 'order_document' order.pk %}">Download your file</a></p>{% endif %}
+  {% if order.stage == -1 %}<p><span class="tag">Cancelled - refunded</span></p>{% else %}{% include "core/_stepper.html" %}{% endif %}
+</div>
+{% if order.stage >= 1 %}<div class="card"><b>Where the money goes</b>
+  <div class="row"><span>Vendor / tutor receives</span><b>${{ order.vendor_amount }}</b></div>
+  <div class="row"><span>GZU Connect commission</span><b>${{ order.commission }}</b></div></div>{% endif %}
+{% if order.can_cancel %}<form method="post" action="{% url 'order_cancel' order.pk %}">{% csrf_token %}<button class="btn danger">Cancel and refund</button></form>{% endif %}
+{% if rating_form %}<form method="post" action="{% url 'order_rate' order.pk %}" class="card">{% csrf_token %}<b>Rate this service</b>
+  <div class="stars">{% for value, label in rating_form.fields.stars.widget.choices %}<input type="radio" name="stars" id="s{{ value }}" value="{{ value }}"><label for="s{{ value }}" title="{{ value }} stars">★</label>{% endfor %}</div>
+  <label for="id_comment">Comment (optional)</label>{{ rating_form.comment }}<p><button class="btn">Submit rating</button></p></form>
+{% elif order.rating %}<div class="card"><b>Your rating:</b> {{ order.rating.stars }} / 5 {% if order.rating.comment %}<div class="muted">{{ order.rating.comment }}</div>{% endif %}</div>{% endif %}
+{% endblock %}

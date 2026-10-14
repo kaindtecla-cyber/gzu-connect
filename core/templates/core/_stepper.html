@@ -1,0 +1,1 @@
+{% for label, done in order.stage_steps %}<div class="step"><span class="dot {% if done %}on{% endif %}"></span><span class="{% if not done %}muted{% endif %}">{{ label }}</span></div>{% endfor %}

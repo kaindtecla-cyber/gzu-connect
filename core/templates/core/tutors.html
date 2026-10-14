@@ -1,0 +1,10 @@
+{% extends "core/base.html" %}{% block heading %}Find a tutor{% endblock %}
+{% block content %}
+<div class="hero tutor">🎓</div>
+<form method="get"><input name="q" value="{{ q }}" placeholder="Search module e.g. HCS223" aria-label="Search tutors"></form>
+{% for t in tutors %}<div class="card" style="margin-top:12px">
+  <div class="row"><b>{{ t.user.first_name|default:t.user.username }}</b><span class="muted">{% if t.avg_rating %}★ {{ t.avg_rating|floatformat:1 }}{% else %}New{% endif %}</span></div>
+  <div class="muted">{{ t.module_code }} {{ t.module_name }}{% if t.bio %} - {{ t.bio }}{% endif %}</div>
+  <div class="row" style="margin-top:10px"><b>${{ t.hourly_rate }}/hr</b><a class="btn sm" href="{% url 'tutor_book' t.pk %}">Book</a></div></div>
+{% empty %}<p class="muted" style="margin-top:12px">No tutors found.</p>{% endfor %}
+{% endblock %}

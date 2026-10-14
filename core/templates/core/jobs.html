@@ -1,0 +1,15 @@
+{% extends "core/base.html" %}{% block heading %}My jobs{% endblock %}
+{% block head %}<meta http-equiv="refresh" content="30">{% endblock %}
+{% block content %}
+<h2>Open</h2>
+{% for o in open_jobs %}<div class="card"><div class="row"><b>{{ o.title }}</b><span>${{ o.vendor_amount }}</span></div>
+  <div class="muted">{{ o.detail }}</div><div class="muted">For {{ o.customer.first_name|default:o.customer.username }}</div>
+  {% if o.document %}<p><a class="btn sm ghost" href="{% url 'order_document' o.pk %}">Download file</a></p>{% endif %}
+  <div class="row" style="margin-top:8px"><span class="tag">{{ o.stage_label }}</span>
+  <span style="display:flex;gap:6px">
+  {% if o.can_cancel %}<form method="post" action="{% url 'order_cancel' o.pk %}">{% csrf_token %}<button class="btn sm danger">Decline</button></form>{% endif %}
+  <form method="post" action="{% url 'job_advance' o.pk %}">{% csrf_token %}<button class="btn sm">Mark: {{ o.next_label }}</button></form></span></div></div>
+{% empty %}<p class="muted">No open jobs.</p>{% endfor %}
+<h2>Recent</h2>
+{% for o in done_jobs %}<div class="card row"><span>{{ o.title }}</span><span class="tag {% if o.stage == 4 %}ok{% endif %}">{{ o.stage_label }}</span></div>{% empty %}<p class="muted">Nothing yet.</p>{% endfor %}
+{% endblock %}

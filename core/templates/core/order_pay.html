@@ -1,0 +1,11 @@
+{% extends "core/base.html" %}{% block heading %}Confirm &amp; pay{% endblock %}
+{% block content %}
+<div class="card"><b>{{ order.title }}</b><div class="muted">{{ order.detail }}</div>
+  {% if order.lines.all %}<table style="margin-top:10px">{% for l in order.lines.all %}<tr><td>{{ l.quantity }} x {{ l.name }}</td><td>${{ l.total }}</td></tr>{% endfor %}</table>{% endif %}
+  <div class="row" style="margin-top:12px"><span>Total</span><b>${{ order.amount }}</b></div></div>
+<div class="card row"><span>Pay from wallet</span><span class="muted">Balance ${{ wallet_balance }}</span></div>
+<p class="help">Your payment is held until the job is marked complete, then released to the vendor or tutor.</p>
+{% if wallet_balance >= order.amount %}
+<form method="post">{% csrf_token %}<button class="btn">Pay ${{ order.amount }}</button></form>
+{% else %}<a class="btn alt" href="{% url 'wallet' %}">Top up wallet first</a>{% endif %}
+{% endblock %}

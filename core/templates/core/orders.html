@@ -1,0 +1,7 @@
+{% extends "core/base.html" %}{% block heading %}My orders{% endblock %}
+{% block content %}
+{% for o in orders %}<a class="card" href="{% url 'order_detail' o.pk %}" style="display:block;text-decoration:none">
+  <div class="row"><b>{{ o.title }}</b><span>${{ o.amount }}</span></div>
+  <div class="row"><span class="muted">{{ o.created|date:"j M, H:i" }}</span><span class="tag {% if o.stage == 4 %}ok{% endif %}">{{ o.stage_label }}</span></div></a>
+{% empty %}<p class="muted">No orders yet.</p>{% endfor %}
+{% endblock %}

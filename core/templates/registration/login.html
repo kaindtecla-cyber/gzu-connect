@@ -1,0 +1,11 @@
+{% extends "core/base.html" %}{% block heading %}Log in{% endblock %}
+{% block content %}
+<p class="muted">One app for printing, laundry, food and tutoring at GZU.</p>
+<form method="post" class="card">{% csrf_token %}
+  {{ form.non_field_errors }}
+  {% for f in form %}{% include "core/_field.html" with field=f %}{% endfor %}
+  <input type="hidden" name="next" value="{{ next }}">
+  <p><button class="btn">Log in</button></p>
+</form>
+<a class="btn ghost" href="{% url 'register' %}">Create an account</a>
+{% endblock %}

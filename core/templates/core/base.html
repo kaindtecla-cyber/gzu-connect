@@ -1,0 +1,37 @@
+{% load static %}<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>{% block title %}GZU Connect{% endblock %}</title>
+<meta name="theme-color" content="#14532D">
+<link rel="icon" href="{% static 'core/img/logo.png' %}">
+<link rel="stylesheet" href="{% static 'core/app.css' %}">
+{% block head %}{% endblock %}
+</head>
+<body>
+<div id="app">
+<header>
+  {% if back_url %}<a href="{{ back_url }}" aria-label="Back" style="font-size:22px;padding:0 4px">&larr;</a>
+  {% else %}<img class="logo" src="{% static 'core/img/logo.png' %}" alt="Great Zimbabwe University logo">{% endif %}
+  <h1>{% block heading %}GZU Connect{% endblock %}</h1>
+  {% if user.is_authenticated %}<span class="muted" style="color:#cfe6d6">${{ wallet_balance }}</span>{% endif %}
+</header>
+<main>
+  {% for m in messages %}<div class="msg {{ m.tags }}">{{ m }}</div>{% endfor %}
+  {% block content %}{% endblock %}
+</main>
+{% if user.is_authenticated %}
+<nav>
+  <a href="{% url 'home' %}" class="{% if nav == 'home' %}on{% endif %}">Home</a>
+  <a href="{% url 'orders' %}" class="{% if nav == 'orders' %}on{% endif %}">Orders</a>
+  <a href="{% url 'wallet' %}" class="{% if nav == 'wallet' %}on{% endif %}">Wallet</a>
+  <a href="{% url 'alerts' %}" class="{% if nav == 'alerts' %}on{% endif %}">Alerts{% if unread_count %} <span class="tag ok">{{ unread_count }}</span>{% endif %}</a>
+  {% if is_provider %}<a href="{% url 'jobs' %}" class="{% if nav == 'jobs' %}on{% endif %}">My jobs</a>{% endif %}
+  <form action="{% url 'logout' %}" method="post" style="flex:1;display:flex">{% csrf_token %}
+    <button style="flex:1;background:none;border:0;color:var(--muted);font-size:13px;cursor:pointer">Log out</button></form>
+</nav>
+{% endif %}
+</div>
+</body>
+</html>

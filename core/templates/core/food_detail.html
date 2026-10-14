@@ -1,0 +1,14 @@
+{% extends "core/base.html" %}{% block heading %}{{ vendor.name }}{% endblock %}
+{% block content %}
+<form method="post">{% csrf_token %}
+  {{ form.errors }}
+  <div class="card">
+  {% for item in form.menu_items %}
+    <div class="row" style="margin:8px 0"><span>{{ item.name }}<br><span class="muted">${{ item.price }}</span></span>
+    <input class="qty" type="number" name="q{{ item.pk }}" min="0" max="20" value="0" aria-label="Quantity of {{ item.name }}"></div>
+  {% empty %}<p class="muted">This vendor has no items available right now.</p>{% endfor %}
+  </div>
+  {% include "core/_field.html" with field=form.location %}
+  <p><button class="btn">Review order</button></p>
+</form>
+{% endblock %}

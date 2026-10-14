@@ -1,0 +1,9 @@
+{% extends "core/base.html" %}{% block heading %}Create account{% endblock %}
+{% block content %}
+<form method="post" class="card">{% csrf_token %}
+  {{ form.non_field_errors }}
+  {% for f in form %}{% include "core/_field.html" with field=f %}{% endfor %}
+  <p><button class="btn">Sign up</button></p>
+</form>
+<a class="btn ghost" href="{% url 'login' %}">I already have an account</a>
+{% endblock %}

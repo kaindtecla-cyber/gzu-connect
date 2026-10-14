@@ -1,0 +1,6 @@
+{% extends "core/base.html" %}{% block heading %}Alerts{% endblock %}
+{% block content %}
+{% for n in items %}<a class="card" href="{{ n.url|default:'#' }}" style="display:block;text-decoration:none;{% if n.pk in unread_ids %}border-color:var(--ok){% endif %}">
+  <div>{{ n.text }}</div><div class="muted">{{ n.created|date:"j M, H:i" }}</div></a>
+{% empty %}<p class="muted">No alerts yet. You'll see new bookings and order updates here.</p>{% endfor %}
+{% endblock %}

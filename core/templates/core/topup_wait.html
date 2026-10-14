@@ -1,0 +1,26 @@
+{% extends "core/base.html" %}{% block heading %}Confirm on your phone{% endblock %}
+{% block content %}
+<div class="card" style="text-align:center">
+  <div style="font-size:40px">📲</div>
+  <b>${{ intent.amount }} via {{ intent.get_method_display|default:intent.method|title }}</b>
+  <p id="msg">{{ intent.instructions|default:"Check your phone and enter your wallet PIN to approve the payment." }}</p>
+  <p class="muted" id="state">Waiting for confirmation...</p>
+</div>
+<a class="btn ghost" id="back" href="{% url 'wallet' %}" style="display:none">Back to wallet</a>
+<script>
+(function(){
+  var url = "{% url 'topup_status' intent.reference %}", tries = 0, done = false;
+  var state = document.getElementById("state"), back = document.getElementById("back");
+  function check(){
+    if (done) return;
+    fetch(url, {credentials: "same-origin"}).then(function(r){ return r.json(); }).then(function(d){
+      if (d.status === "paid"){ done = true; window.location = "{% url 'wallet' %}"; }
+      else if (d.status === "failed"){ done = true; state.textContent = "Payment was not completed. " + (d.error || "No money was taken."); back.style.display = "block"; }
+      else if (++tries > 45){ done = true; state.textContent = "Still waiting. If you approved it, your balance will update shortly."; back.style.display = "block"; }
+      else setTimeout(check, 4000);
+    }).catch(function(){ setTimeout(check, 6000); });
+  }
+  setTimeout(check, 3000);
+})();
+</script>
+{% endblock %}

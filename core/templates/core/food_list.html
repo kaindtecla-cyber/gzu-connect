@@ -1,0 +1,8 @@
+{% extends "core/base.html" %}{% load static %}{% block heading %}Food delivery{% endblock %}
+{% block content %}
+<div class="hero" style="background-image:url('{% static 'core/img/food.jpg' %}')"></div>
+{% for v in vendors %}<a class="card row" href="{% url 'food_detail' v.pk %}" style="text-decoration:none">
+  <span><b>{{ v.name }}</b><br><span class="muted">{{ v.location }}</span></span>
+  <span class="muted">{% if v.avg_rating %}★ {{ v.avg_rating|floatformat:1 }}{% else %}New{% endif %}</span></a>
+{% empty %}<p class="muted">No food vendors yet.</p>{% endfor %}
+{% endblock %}
